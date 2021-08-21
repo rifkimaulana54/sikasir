@@ -86,7 +86,7 @@ class KasirController extends Controller
     public function getSolds()
     {
         $solds = Sold::where('counted', 0)->get();
-        return view('kasir.solds.data-sold', compact('solds'));
+        return view('kasir.data-sold', compact('solds'));
     }
 
     public function store($id)

@@ -82,12 +82,6 @@
             });
         }
 
-        function soldNew() {
-            $.get('/data-new/solds', {}, function(data, status){
-                $('#solds').html(data);
-            });
-        }
-
         function kasirKategori(id){
             $.get("/kasir/menu-perkategori/"+id, {}, function(data, status){
                 $('#data-kasir').html(data)
@@ -115,6 +109,12 @@
             soldNew();
         }
 
+        
+        function soldNew() {
+            $.get('/data-new/solds', {}, function(data, status){
+                $('#solds').html(data);
+            });
+        }
         function updatePesanan(){
             var jum_uang      = $('#jum-uang').val();
             var grandtotal    = $('#grandtotal').val();
