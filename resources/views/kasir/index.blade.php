@@ -89,24 +89,29 @@
         }
 
         function selectMenu(id){
-            $.get('/select/'+id+'/addCart');
-            soldNew();
+            $.get('/select/'+id+'/addCart', {}, function(data, status){;
+                soldNew();
+            });
+
         }
         
         function updateQuantity(id){
             var val = $('#qty-'+id).val();
-            $.get('/select/'+id+'/update-qty/'+val)
-            soldNew();
+            $.get('/select/'+id+'/update-qty/'+val, {}, function(data, status){;
+                soldNew();
+            });
         }
 
         function hapusPesanan(id){
-            $.get('/select/'+id+'/delete-pesanan');
-            soldNew();
+            $.get('/select/'+id+'/delete-pesanan', {}, function(data, status){;
+                soldNew();
+            });
         }
 
         function reset(){
-            $.get('/select/reset-pesanan');
-            soldNew();
+            $.get('/select/reset-pesanan', {}, function(data, status){;
+                soldNew();
+            });
         }
 
         
