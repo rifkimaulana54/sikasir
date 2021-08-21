@@ -89,13 +89,13 @@
         }
 
         function selectMenu(id){
-            $.get('/select/'+id+'/addCart')
+            $.get('/select/'+id+'/addCart');
             soldNew();
         }
         
         function updateQuantity(id){
             var val = $('#qty-'+id).val();
-            $.ajax('/select/'+id+'/update-qty/'+val)
+            $.get('/select/'+id+'/update-qty/'+val)
             soldNew();
         }
 
