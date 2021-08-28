@@ -118,7 +118,18 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="/">Stisla</a>
+                    @php
+                        use Illuminate\Support\Facades\DB;
+                        $data_app = DB::table('settings')->first();
+                    @endphp
+                    @if ($data_app == null)
+                        <a href="/"> SiKasir</a>
+                    @else
+                        <a href="/">
+                            <img src="{{asset('image/'.$data_app->logo)}}" style="width: 50px;" class="img-fluid rounded-circle"/>
+                            {{$data_app->nama_brand}}
+                        </a>
+                    @endif
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">St</a>
@@ -139,8 +150,8 @@
                             <i class="far fa-file-alt"></i> <span>Laporan Penjualan</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link"><i class="fas fa-cog">
+                    <li @yield('nav-setting')>
+                        <a href="/admin/setting" class="nav-link"><i class="fas fa-cog">
                             </i> <span>Settings</span>
                         </a>
                     </li>
@@ -174,6 +185,7 @@
     <script src="{{asset('assets/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
     <script src="{{asset('assets/modules/moment.min.js')}}"></script>
     <script src="{{asset('assets/js/stisla.js')}}"></script>
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 
     <!-- JS Libraies -->
@@ -185,5 +197,6 @@
     <script src="{{asset('assets/js/custom.js')}}"></script>
 
     @yield('js')
+    @stack('scripts')
 </body>
 </html>

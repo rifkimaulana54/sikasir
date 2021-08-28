@@ -3,18 +3,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{(Auth::user()->hasRole('admin') ? '/admin' : '/kasir')}}">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Tea_cup_icon.svg/1024px-Tea_cup_icon.svg.png" alt="" class="block h-10 w-auto fill-current text-gray-600">
-                    </a>
-                </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-2 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        <b style="font-size: 25px;">SiKas</b>
-                    </x-nav-link>
+                    @php
+                        $data_app = DB::table('settings')->first();
+                    @endphp
+                    @if ($data_app == null)
+                        <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                            <b style="font-size: 25px;">SiKas</b>
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                            <img src="{{asset('image/'.$data_app->logo)}}" style="width: 50px;" class="img-fluid rounded-circle mr-2"/>
+                            <b style="font-size: 25px;">{{$data_app->nama_brand}}</b>
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -63,8 +66,19 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            @php
+                use Illuminate\Support\Facades\DB;
+                $data_app = DB::table('settings')->first();
+            @endphp
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                <b style="font-size: 25px;">SiKas</b>
+                    @if ($data_app == null)
+                        <a href="/"> SiKasir</a>
+                    @else
+                        <a href="/">
+                            <img src="{{asset('image/'.$data_app->logo)}}" style="width: 50px;" class="img-fluid rounded-circle"/>
+                            <b style="font-size: 25px;">{{$data_app->nama_brand}}</b>
+                        </a>
+                    @endif
             </x-responsive-nav-link>
         </div>
 

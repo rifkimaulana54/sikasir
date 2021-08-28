@@ -8,7 +8,7 @@
         <h1>Laporan Penjualan</h1>
     </div>
     <div class="section-body">
-        <div class="card">
+        <div class="card shadow">
             <div class="card-header">
                 <h4 style="width: 250px">Table Data Terjual </h4>
                 <div class="form-group" style="cursor: pointer; margin: 20px 0 0 auto">

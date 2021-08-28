@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SettingController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckKasir;
 
@@ -21,11 +22,12 @@ Route::middleware([CheckKasir::class])->group(function () {
     Route::get('/kasir/menu-all', [KasirController::class, 'allMenu']);
     Route::get('/kasir/daftar-menu/cari', [KasirController::class, 'search']);
     Route::get('kasir/menu-perkategori/{kategori_id}', [KasirController::class, 'menuPerkategori']);
-    Route::get('select/{id}/addCart', [KasirController::class, 'store']);
+    Route::get('select/{id}/{jumlah}/addCart', [KasirController::class, 'store']);
     Route::get('data-new/solds', [KasirController::class, 'getSolds']);
     Route::get('select/{id}/delete-pesanan', [KasirController::class, 'destroy']);
     Route::get('select/reset-pesanan', [KasirController::class, 'reset']);
-    Route::get('select/{id}/update-qty/{qty}', [KasirController::class, 'updateQty']);
+    Route::get('select/{id}/update-qty/{qty}/{harga}', [KasirController::class, 'updateQty']);
+    Route::get('/kasir/print-nota/{tunai}', [KasirController::class, 'print']);
 });
 
 Route::middleware([CheckAdmin::class])->group(function () {
@@ -48,7 +50,11 @@ Route::middleware([CheckAdmin::class])->group(function () {
 
     Route::get('laporan', [LaporanController::class, 'index']);
     Route::get('laporan/select/{date}', [LaporanController::class, 'getPerdate']);
-    // Route::get('laporan/getData', [LaporanController::class, 'getData']);
+
+    Route::get('admin/setting', [SettingController::class, 'setting']);
+    Route::get('admin/setting/{id}', [SettingController::class, 'edit']);
+    Route::post('setting/{id}/update', [SettingController::class, 'update']);
+    Route::get('setting/new-data', [SettingController::class, 'newData']);
 });
 
 

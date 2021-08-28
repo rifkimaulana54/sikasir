@@ -33,7 +33,6 @@
     </div>
 </form>
 
-
 <script>
     $(document).ready(function() {
         newData();

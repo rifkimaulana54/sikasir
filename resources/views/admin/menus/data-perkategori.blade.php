@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shadow">
     <div class="card-header">
         <h4 class="mr-4">Table Daftar Menu</h4>
     </div>

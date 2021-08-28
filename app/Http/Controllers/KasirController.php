@@ -60,7 +60,7 @@ class KasirController extends Controller
                 foreach ($data as $row) {
                     $output .= '
                     <div class="col-2 mb-4 text-center">
-                        <a class="text-dark text-decoration-none" onclick="selectMenu(' . $row->id . ')" style="cursor: pointer">
+                        <a class="text-dark text-decoration-none" onclick="selectMenu(' . $row->id . ',' . $row->harga . ')" style="cursor: pointer">
                             <img src="' . url("image/menu/" . $row->gambar) . '"width="90" class="mr-1 ml-auto mr-auto">
                             <small>' . $row->nama_menu . '</small>
                         </a>
@@ -89,19 +89,22 @@ class KasirController extends Controller
         return view('kasir.data-sold', compact('solds'));
     }
 
-    public function store($id)
+    public function store($id, $jumlah)
     {
         $user = Auth::user();
         $cek = Sold::where('menu_id', $id)->where('counted', 0)->first();
         if ($cek == null) {
             $user->sold()->create([
                 "quantity" => 1,
+                "jumlah" => $jumlah,
                 "menu_id" => $id,
+                "bulan" => date('Y-m'),
                 "tanggal" => date('Y-m-d'),
             ]);
         } else {
             $cek->update([
                 "quantity" => $cek->quantity + 1,
+                "jumlah" => $jumlah + $jumlah,
             ]);
         }
     }
@@ -114,16 +117,24 @@ class KasirController extends Controller
         return $reset;
     }
 
-    public function updateQty($id, $qty)
+    public function updateQty($id, $qty, $harga)
     {
-        $jumlah = Sold::findOrFail($id);
-        $jumlah->update([
+        $total = Sold::findOrFail($id);
+        $total->update([
             'quantity' => $qty,
+            "jumlah" => $harga * $qty,
         ]);
     }
 
     public function destroy($id)
     {
         Sold::findOrFail($id)->delete();
+    }
+
+    public function print($tunai)
+    {
+
+        $solds = Sold::where('counted', 0)->orderBy('id', 'asc')->get();
+        return view('kasir.print-nota', compact('solds', 'tunai'));
     }
 }

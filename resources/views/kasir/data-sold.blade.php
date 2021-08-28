@@ -18,7 +18,7 @@
                         @foreach ($solds as $sold)
                             <tr>
                                 <td width="150" style="font-size: 15px; cursor: pointer">
-                                    <button type="button" class="text-primary" onclick="updateQuantity({{$sold->id}})"><i class="fas fa-sync-alt"></i></button>&nbsp;
+                                    <button type="button" class="text-primary" onclick="updateQuantity({{$sold->id}},{{$sold->menu->harga}})"><i class="fas fa-sync-alt"></i></button>&nbsp;
                                     <input type="text" id="qty-{{$sold->id}}" name="quantity" value="{{$sold->quantity}}" autocomplete="off" style="width: 45px; height:25px">
                                     <input type="hidden" id="id-pesanan-{{$sold->id}}" value="{{$sold->id}}">
                                 </td>
@@ -40,8 +40,8 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td colspan="2">Jumlah Uang</td>
-                            <td class="text-right"><input id="jum-uang" class="text-right" type="text" style="width: 90px; height:25px"></td>
+                            <td colspan="2">Tunai</td>
+                            <td class="text-right"><input id="jum-uang" value="0" class="text-right" type="text" style="width: 90px; height:25px"></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -57,6 +57,13 @@
     <div class="mt-2 float-right">
         <button onclick="reset()" class="btn btn-sm btn-danger" type="submit">reset</button> &nbsp;
         <button onclick="updatePesanan()" class="btn btn-sm btn-primary">update</button> &nbsp;
-        <button class="btn btn-sm btn-success" type="submit">print</button>
+        <button onclick="printNota()" href="_blank" class="btn btn-sm btn-success">print</button>
+        <span id="print"></span>
     </div>
 @endif
+<script>
+    function printNota(){
+        var jum_uang = $('#jum-uang').val();
+        window.open("http://localhost:8000/kasir/print-nota/"+jum_uang, "_blank")
+    }
+</script>
